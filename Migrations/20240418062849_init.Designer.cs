@@ -11,8 +11,8 @@ using PizzaOrderApp.Database.Sqlite;
 namespace PizzaOrderApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240411105725_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240418062849_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,10 +24,6 @@ namespace PizzaOrderApp.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Status")
@@ -81,7 +77,15 @@ namespace PizzaOrderApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

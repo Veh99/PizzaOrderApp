@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics.Eventing.Reader;
+using System.Globalization;
 
 namespace PizzaOrderApp.Models
 {
@@ -12,15 +13,20 @@ namespace PizzaOrderApp.Models
 
         public List<OrderEntity> Orders { get; set; } = [];
 
-        public UserEntity(Guid id, string userName, string password, string address, string phoneNumber)
-        {
-            Id = id;
-            Password = password;
-            UserName = userName;
-            Address = address;
-            PhoneNumber = phoneNumber;
+        //private UserEntity(Guid id, string userName, string password, string address, string phoneNumber)
+        //{
+        //    Id = id;
+        //    Password = password;
+        //    UserName = userName;
+        //    Address = address;
+        //    PhoneNumber = phoneNumber;
 
-        }
+        //}
+        //public UserEntity Create(Guid id, string userName, string password, string address, string phoneNumber)
+        //{
+        //    var user = new UserEntity(id, userName, password, address, phoneNumber);
+        //    return user;
+        //} 
 
     }
 }

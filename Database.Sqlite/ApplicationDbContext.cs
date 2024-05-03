@@ -11,9 +11,9 @@ namespace PizzaOrderApp.Database.Sqlite
         {
         }
 
+        public DbSet<OrderEntity> Orders { get; set; }
         public DbSet<PizzaEntity> Pizzas { get; set; }
         public DbSet<UserEntity> Users { get; set; }
-        public DbSet<OrderEntity> Orders { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new OrderConfigutarion());

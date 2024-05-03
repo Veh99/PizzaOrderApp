@@ -12,7 +12,7 @@ namespace PizzaOrderApp.Configurations
 
             builder.HasOne(p => p.Order)
                 .WithMany(o => o.Pizzas)
-                .HasForeignKey(p => p.OrderId);
+                /*.HasForeignKey(p => p.OrderId)*/;
 
         }
     }
