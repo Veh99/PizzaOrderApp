@@ -16,11 +16,11 @@ namespace PizzaOrderApp.Repositories
 
         public async Task<List<UserEntity>> Get()
         {
-            var pizzaEntities = await _dbContext.Users
+            var userEntities = await _dbContext.Users
                 .AsNoTracking()
                 .ToListAsync();
 
-            return pizzaEntities;
+            return userEntities;
         }
 
         public async Task<UserEntity?> GetById(Guid id)
@@ -43,6 +43,7 @@ namespace PizzaOrderApp.Repositories
         }
         public async Task Add(Guid id, string userName, string password, string address, string phoneNumber)
         {
+            
             var userEntity = new UserEntity
             {
                 Id = id,

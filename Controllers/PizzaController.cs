@@ -19,9 +19,9 @@ namespace PizzaOrderApp.Controllers
         [HttpGet]   
         public async Task<ActionResult<List<PizzaResponse>>> GetPizzas()
         {
-            var pizzas = await _pizzaContext.Get();
-
-            return Ok(pizzas);
+            var users = await _pizzaContext.Get();
+            var response = users.Select(p => new PizzaResponse(p.Id, p.Name, p.Description, p.Price));
+            return Ok(response);
         }
 
         [HttpGet("{id}")]

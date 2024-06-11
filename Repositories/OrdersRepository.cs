@@ -30,12 +30,14 @@ namespace PizzaOrderApp.Repositories
                 .FirstOrDefaultAsync(o => o.Id == id);
         }
             
-        public async Task Add(Guid id, string status)
+        public async Task Add(Guid id, Guid userId, string status, params Guid[] pizza)
         {
             var orderEntity = new OrderEntity
             {
                 Id = id,
-                Status = status
+                Status = status,
+                Pizzas = pizza.Select(x => new PizzaEntity { Id = x }).ToList(),
+                UserId = userId,
             };
 
             await _dbContext.AddAsync(orderEntity);

@@ -20,8 +20,7 @@ namespace PizzaOrderApp.Controllers
         [HttpGet]
         public async Task<ActionResult<List<OrderEntity>>> GetOrders()
         {
-            return await _ordersContext
-                .Get();
+            return await _ordersContext.Get();
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<OrderEntity?>> GetOrderById(Guid id)
@@ -32,9 +31,9 @@ namespace PizzaOrderApp.Controllers
         }
 
         [HttpPost]
-        public async Task CreateOrder(Guid id, string status)
+        public async Task CreateOrder(Guid id, Guid userId, string status, params Guid[] pizza)
         {
-            await _ordersContext.Add(id, status);
+            await _ordersContext.Add(id, userId, status, pizza);
             
         }
 
