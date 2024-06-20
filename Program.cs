@@ -27,8 +27,6 @@ namespace PizzaOrderApp
             builder.Services.AddScoped<OrdersRepository>();
             builder.Services.AddScoped<PizzaRepository>();
 
-
-                
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -42,16 +40,8 @@ namespace PizzaOrderApp
 
             app.UseAuthorization();
 
-
             app.MapControllers();
 
-            app.UseCors(x =>
-            {
-                x.WithHeaders().AllowAnyHeader();           
-                x.WithMethods().AllowAnyMethod();
-                x.WithOrigins("http://localhost:3000");
-            });
-                
             app.Run();
         }
     }

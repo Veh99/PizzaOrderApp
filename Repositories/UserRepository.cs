@@ -41,7 +41,7 @@ namespace PizzaOrderApp.Repositories
            .SetProperty(u => u.UserName, userName)
            .SetProperty(u => u.Password, password));    
         }
-        public async Task Add(Guid id, string userName, string password, string address, string phoneNumber)
+        public async Task Add(Guid id, string userName, string address, string phoneNumber, string password)
         {
             
             var userEntity = new UserEntity

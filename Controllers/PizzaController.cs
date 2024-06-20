@@ -19,8 +19,8 @@ namespace PizzaOrderApp.Controllers
         [HttpGet]   
         public async Task<ActionResult<List<PizzaResponse>>> GetPizzas()
         {
-            var users = await _pizzaContext.Get();
-            var response = users.Select(p => new PizzaResponse(p.Id, p.Name, p.Description, p.Price));
+            var pizzas = await _pizzaContext.Get();
+            var response = pizzas.Select(p => new PizzaResponse(p.Id, p.Name, p.Description, p.Price));
             return Ok(response);
         }
 
@@ -32,9 +32,13 @@ namespace PizzaOrderApp.Controllers
         }
 
         [HttpPost]
-        public async Task CreatePizza(Guid id, string name, string description, decimal price)
+        public async Task CreatePizza(Guid id, [FromBody] PizzaRequest request)
         {
-            await _pizzaContext.Create(id, name, description, price);
+            await _pizzaContext.Create(
+                Guid.NewGuid(),
+                request.Name,
+                request.Description,
+                request.Price);
         }
 
         [HttpPut("{id}")]

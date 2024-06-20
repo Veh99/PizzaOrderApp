@@ -1,11 +1,15 @@
-﻿namespace PizzaOrderApp.Models
+﻿using System.Text.Json.Serialization;
+
+namespace PizzaOrderApp.Models
 {
     public class OrderEntity
     {
         public Guid Id { get; set; }
         public string Status { get; set; } = string.Empty;
-        public ICollection<PizzaEntity> Pizzas { get; set; } = [];
         public Guid UserId { get; set; }
-        public UserEntity User { get; set; }
+        public ICollection<PizzaEntity> Pizzas { get; set; } = [];
+        [JsonIgnore]
+        public UserEntity? User { get; set; }
+
     }
 }

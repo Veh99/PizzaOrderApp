@@ -11,14 +11,29 @@ using PizzaOrderApp.Database.Sqlite;
 namespace PizzaOrderApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240611123712_newMigration")]
-    partial class newMigration
+    [Migration("20240617132903_OrderResponsee")]
+    partial class OrderResponsee
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.6");
+
+            modelBuilder.Entity("OrderEntityPizzaEntity", b =>
+                {
+                    b.Property<Guid>("OrderEntityId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("PizzasId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("OrderEntityId", "PizzasId");
+
+                    b.HasIndex("PizzasId");
+
+                    b.ToTable("OrderEntityPizzaEntity");
+                });
 
             modelBuilder.Entity("PizzaOrderApp.Models.OrderEntity", b =>
                 {
@@ -54,15 +69,10 @@ namespace PizzaOrderApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("TEXT");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("Pizzas");
                 });
@@ -94,6 +104,21 @@ namespace PizzaOrderApp.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("OrderEntityPizzaEntity", b =>
+                {
+                    b.HasOne("PizzaOrderApp.Models.OrderEntity", null)
+                        .WithMany()
+                        .HasForeignKey("OrderEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PizzaOrderApp.Models.PizzaEntity", null)
+                        .WithMany()
+                        .HasForeignKey("PizzasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("PizzaOrderApp.Models.OrderEntity", b =>
                 {
                     b.HasOne("PizzaOrderApp.Models.UserEntity", "User")
@@ -103,22 +128,6 @@ namespace PizzaOrderApp.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("PizzaOrderApp.Models.PizzaEntity", b =>
-                {
-                    b.HasOne("PizzaOrderApp.Models.OrderEntity", "Order")
-                        .WithMany("Pizzas")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("PizzaOrderApp.Models.OrderEntity", b =>
-                {
-                    b.Navigation("Pizzas");
                 });
 
             modelBuilder.Entity("PizzaOrderApp.Models.UserEntity", b =>

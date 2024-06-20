@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using PizzaOrderApp.Contracts;
-using PizzaOrderApp.Database.Sqlite;
-using PizzaOrderApp.Models;
 using PizzaOrderApp.Repositories;
 
 namespace PizzaOrderApp.Controllers
@@ -32,14 +29,9 @@ namespace PizzaOrderApp.Controllers
             var user = await _userContext.GetById(id);
             return Ok(user);
         }
-
-        
-
         [HttpPost]
         public async Task CreateUser(Guid id, [FromBody] UserRequest request)
         {
-            
-
             await _userContext.Add(
                 Guid.NewGuid(),
                 request.UserName,

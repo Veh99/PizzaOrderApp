@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using PizzaOrderApp.Contracts;
 using PizzaOrderApp.Database.Sqlite;
 using PizzaOrderApp.Models;
 
@@ -12,13 +13,15 @@ namespace PizzaOrderApp.Repositories
         public OrdersRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
+            
         }   
 
         public async Task<List<OrderEntity>> Get()
         {
             var orders = await _dbContext.Orders
                 .AsNoTracking()
-                .ToListAsync();    
+                .Include(o => o.Pizzas)
+                .ToListAsync();
 
             return orders;
         }
@@ -27,6 +30,7 @@ namespace PizzaOrderApp.Repositories
         {
             return await _dbContext.Orders
                 .AsNoTracking()
+                .Include (o => o.Pizzas)
                 .FirstOrDefaultAsync(o => o.Id == id);
         }
             
@@ -35,14 +39,14 @@ namespace PizzaOrderApp.Repositories
             var orderEntity = new OrderEntity
             {
                 Id = id,
-                Status = status,
-                Pizzas = pizza.Select(x => new PizzaEntity { Id = x }).ToList(),
                 UserId = userId,
+                Status = status
             };
 
             await _dbContext.AddAsync(orderEntity);
+            var piz = _dbContext.Pizzas.Where(x => pizza.Contains(x.Id));
+            piz.ToList().ForEach(x => orderEntity.Pizzas.Add(x));
             await _dbContext.SaveChangesAsync();
-            
         }
 
         public async Task<Guid> Update(Guid id, string status)

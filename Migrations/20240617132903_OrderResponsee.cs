@@ -5,7 +5,7 @@
 namespace PizzaOrderApp.Migrations
 {
     /// <inheritdoc />
-    public partial class newMigration : Migration
+    public partial class OrderResponsee : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

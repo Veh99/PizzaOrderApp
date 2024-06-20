@@ -4,7 +4,7 @@ using PizzaOrderApp.Models;
 
 namespace PizzaOrderApp.Configurations
 {
-    public class UserConfigutarion : IEntityTypeConfiguration<UserEntity>
+    public class UserConfiguration : IEntityTypeConfiguration<UserEntity>
     {
         public void Configure(EntityTypeBuilder<UserEntity> builder)
         {

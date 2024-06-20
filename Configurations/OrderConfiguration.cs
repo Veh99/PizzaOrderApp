@@ -4,7 +4,7 @@ using PizzaOrderApp.Models;
 
 namespace PizzaOrderApp.Configurations
 {
-    public class OrderConfigutarion : IEntityTypeConfiguration<OrderEntity>
+    public class OrderConfiguration : IEntityTypeConfiguration<OrderEntity>
     {
         public void Configure(EntityTypeBuilder<OrderEntity> builder)
         {
@@ -12,11 +12,11 @@ namespace PizzaOrderApp.Configurations
 
             builder.HasOne(o => o.User)
                 .WithMany(u => u.Orders)
-                /*.HasForeignKey(o => o.UserId)*/;
-                
+                .HasForeignKey(o => o.UserId);
+
 
             builder.HasMany(o => o.Pizzas)
-                .WithOne(p => p.Order)
+                .WithMany()
                 /*.HasForeignKey(p => p.OrderId)*/;
 
         }

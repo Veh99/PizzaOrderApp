@@ -16,9 +16,9 @@ namespace PizzaOrderApp.Database.Sqlite
         public DbSet<UserEntity> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new OrderConfigutarion());
-            modelBuilder.ApplyConfiguration(new PizzaConfigutarion());
-            modelBuilder.ApplyConfiguration(new UserConfigutarion());
+            modelBuilder.ApplyConfiguration(new OrderConfiguration());
+            modelBuilder.ApplyConfiguration(new PizzaConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());                                                             
 
             base.OnModelCreating(modelBuilder);
         }

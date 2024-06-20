@@ -22,17 +22,11 @@ namespace PizzaOrderApp.Repositories
             return pizzas;
         }
 
-        public async Task<PizzaEntity> GetById(Guid id)
+        public async Task<PizzaEntity?> GetById(Guid id)
         {
-            var pizza = await _dbContext.Pizzas
+            return await _dbContext.Pizzas
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == id);
-            if(pizza == null)
-            {
-                throw new Exception("ID is incorrect");
-            }
-
-            return pizza;
         }
 
         public async Task Create(Guid id, string name, string description, decimal price)
