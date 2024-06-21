@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PizzaOrderApp.Database.Sqlite;
+using PizzaOrderApp.Infrastraction;
+using PizzaOrderApp.Interfaces;
 using PizzaOrderApp.Repositories;
 
 namespace PizzaOrderApp
@@ -27,6 +29,9 @@ namespace PizzaOrderApp
             builder.Services.AddScoped<OrdersRepository>();
             builder.Services.AddScoped<PizzaRepository>();
 
+            builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+            builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -35,7 +40,6 @@ namespace PizzaOrderApp
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
