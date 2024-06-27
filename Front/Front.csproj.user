@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Compile Update="AccountSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="AdminPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Authentication.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="OrderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PizzaCRUD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="UserCRUD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Registration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="UserMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="AccountSettings.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>
