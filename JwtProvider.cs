@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization.Infrastructure;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using PizzaOrderApp.Models;
+using PizzaOrderApp.Contracts;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace PizzaOrderApp
@@ -18,21 +16,20 @@ namespace PizzaOrderApp
             _options = options.Value;
         }
 
-        private string GenerateJwt(UserEntity user)
+        public string GenerateJwt(UserLoginRequest request)
         {
-            Claim[] claims = [new("userId"), user.Id.ToString()];
+            Claim[] claims = [new("userName", request.UserName)];
 
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey)),
                 SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-
+                claims: claims,
                 signingCredentials: signingCredentials,
-                expires: DateTime.UtcNow.AddHours(_options.ExpiredHours)
-                );
+                expires: DateTime.UtcNow.AddHours(_options.ExpiredHours));
 
-            var tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
+            string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
 
             return tokenValue;
         }

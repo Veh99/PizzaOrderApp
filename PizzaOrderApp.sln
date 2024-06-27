@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaOrderApp", "PizzaOrderApp.csproj", "{20CB6676-0CBF-49E2-A5EC-165B8B7A831E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Front", "..\Front\Front.csproj", "{0E40614A-D7AC-4437-BEEE-872D68302161}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Front", "..\Front\Front.csproj", "{0E40614A-D7AC-4437-BEEE-872D68302161}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -16,21 +16,6 @@ namespace PizzaOrderApp.Controllers
             _pizzaContext = pizzaContext;
         }
 
-        [HttpGet]   
-        public async Task<ActionResult<List<PizzaResponse>>> GetPizzas()
-        {
-            var pizzas = await _pizzaContext.Get();
-            var response = pizzas.Select(p => new PizzaResponse(p.Id, p.Name, p.Description, p.Price));
-            return Ok(response);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<PizzaResponse>> GetPizzaById(Guid id)
-        {
-            var pizza = await _pizzaContext.GetById(id);
-            return Ok(pizza);
-        }
-
         [HttpPost]
         public async Task CreatePizza(Guid id, [FromBody] PizzaRequest request)
         {
@@ -41,16 +26,37 @@ namespace PizzaOrderApp.Controllers
                 request.Price);
         }
 
-        [HttpPut("{id}")]
-        public async Task UpdatePizza(Guid id, [FromBody] PizzaRequest pizza)
-        {
-            await _pizzaContext.Update(id, pizza.Name, pizza.Description, pizza.Price);
-        }
-
         [HttpDelete("{id}")]
         public async Task DeletePizza(Guid id)
         {
             await _pizzaContext.Delete(id);
+        }
+
+        [HttpGet]
+        [Route("/detectChanges")]
+        public async Task DetectChanges()
+        {
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<PizzaResponse>> GetPizzaById(Guid id)
+        {
+            var pizza = await _pizzaContext.GetById(id);
+            return Ok(pizza);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<PizzaResponse>>> GetPizzas()
+        {
+            var pizzas = await _pizzaContext.Get();
+            var response = pizzas.Select(p => new PizzaResponse(p.Id, p.Name, p.Description, p.Price));
+            return Ok(response);
+        }
+
+        [HttpPut("{id}")]
+        public async Task UpdatePizza(Guid id, [FromBody] PizzaRequest pizza)
+        {
+            await _pizzaContext.Update(id, pizza.Name, pizza.Description, pizza.Price);
         }
     }
 }

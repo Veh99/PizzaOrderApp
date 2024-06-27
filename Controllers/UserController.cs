@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PizzaOrderApp.Contracts;
 using PizzaOrderApp.Interfaces;
 using PizzaOrderApp.Repositories;
@@ -10,12 +11,14 @@ namespace PizzaOrderApp.Controllers
     public class UserController : ControllerBase
     {
         private readonly IPasswordHasher _passwordHasher;
+        private readonly JwtProvider _provider;
         private readonly UserRepository _userContext;
 
-        public UserController(UserRepository userContext, IPasswordHasher passwordHasher)
+        public UserController(UserRepository userContext, IPasswordHasher passwordHasher, JwtProvider provider)
         {
             _userContext = userContext;
             _passwordHasher = passwordHasher;
+            _provider = provider;
         }
 
         [HttpPost]
@@ -51,28 +54,30 @@ namespace PizzaOrderApp.Controllers
         }
 
         [HttpPost]
+        [Produces("text/plain")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Route("/login")]
-        public async Task Login(Guid id, [FromBody] UserLoginRequest request)
+        public async Task<ActionResult<string>> Login([FromBody] UserLoginRequest request)
         {
-            var user = await _userContext.GetByUsername(request.UserName);
-            if (user == null)
-            {
-                throw new Exception("No user with such login");
-            }
+            var user = await _userContext.GetByUsername(request.UserName) ?? throw new Exception("No user with such login");
+            bool isPasswordCorrect = _passwordHasher.Verify(request.Password, user.Password);
 
-            bool isExist = _passwordHasher.Verify(request.Password, user.Password);
-
-            if (isExist == false)
+            if (!isPasswordCorrect)
             {
                 throw new Exception("Wrong password");
             }
 
-            var token =
+            string token = _provider.GenerateJwt(request);
+
+            var pathBase = HttpContext;
+            pathBase.Response.Cookies.Append("COOKIES", token);
+
+            return Ok(token);
         }
 
         [HttpPost]
         [Route("/register")]
-        public async Task Register(Guid id, [FromBody] UserRequest request)
+        public async Task Register([FromBody] UserRequest request)
         {
             var password = BCrypt.Net.BCrypt.EnhancedHashPassword(request.Password);
             await _userContext.Add(
